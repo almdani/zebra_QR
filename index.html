@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>مولد QR ذكي وسهل | صمم باركودك بنفسك مجانًا</title>
+  <meta name="description" content="أنشئ باركود QR احترافي بسهولة وباللغة العربية. اختر الألوان، الحجم، وتصحيح الخطأ ثم حمّله مجانًا. يدعم الروابط والنصوص.">
+  <meta name="keywords" content="باركود, مولد باركود, QR Code, إنشاء باركود, توليد QR, باركود مجاني, باركود ذكي, QR عربي">
+  <link rel="canonical" href="https://yourdomain.com/ar/qr-generator" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "مولد الباركود الذكي",
+    "url": "https://yourdomain.com/ar/qr-generator",
+    "applicationCategory": "Utility",
+    "operatingSystem": "All",
+    "description": "أنشئ باركود QR بسهولة باللغة العربية. اختر الحجم والألوان واحفظه مجانًا."
+  }
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Cairo', sans-serif;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+      background: url('bk.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+    .main-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      width: 100%;
+      max-width: 1200px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .container, .preview-box {
+      background: rgba(0,0,0,0.6);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      flex: 1;
+      min-width: 300px;
+      max-width: 500px;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: #c99c08;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    input[type="text"], select {
+      width: 100%;
+      padding: 0.8rem;
+      margin-top: 0.5rem;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+    }
+    button {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 1rem;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #00e1ff, #008cff);
+      color: #000;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+    .color-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .color-box {
+      flex: 1;
+    }
+    .color-box label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+    .color-box .color-input {
+      width: 100%;
+      height: 45px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      padding: 0;
+    }
+    #qrcode-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 1rem 0;
+      width: 100%;
+    }
+    #qrcode {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+    }
+    .language-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255,255,255,0.8);
+      color: #000;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      z-index: 1000;
+    }
+    .ad-bar {
+      width: 100%;
+      height: 110px;
+      text-align: center;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.6);
+      color: #ccc;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      font-size: 0.9rem;
+      z-index: 999;
+    }
+    .intro-text {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+      color: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="language-toggle" onclick="toggleLanguage()">English</div>
+
+<div class="main-wrapper">
+  <div class="container">
+    <h1 id="settings-title">🎯 إعدادات الباركود</h1>
+
+
+    <label for="text" id="label-text">  الرابط</label>
+    <input type="text" id="text" placeholder="https://example.com">
+
+    <div class="color-row">
+      <div class="color-box">
+        <label id="label-colorDark">🎨 لون الباركود</label>
+        <input type="color" id="colorDark" value="#000000" class="color-input">
+      </div>
+      <div class="color-box">
+        <label id="label-colorLight">🖼️ لون الخلفية</label>
+        <input type="color" id="colorLight" value="#ffffff" class="color-input">
+      </div>
+    </div>
+
+    <label for="size" id="label-size">الحجم</label>
+    <select id="size">
+      <option value="150">150x150</option>
+      <option value="200">200x200</option>
+      <option value="300" selected>300x300</option>
+      <option value="400">400x400</option>
+    </select>
+
+    <label for="errorCorrection" id="label-error">تصحيح الخطأ</label>
+    <select id="errorCorrection">
+      <option value="L">منخفض (L)</option>
+      <option value="M" selected>متوسط (M)</option>
+      <option value="Q">جيد (Q)</option>
+      <option value="H">عالي (H)</option>
+    </select>
+
+    <button onclick="generateQRCode()" id="generateBtn">🔄 توليد الباركود</button>
+  </div>
+
+  <div class="preview-box">
+    <h1 id="preview-title">🔥 الباركود الناتج</h1>
+    <div id="qrcode-wrapper">
+      <div id="qrcode"></div>
+    </div>
+    <button id="downloadBtn" onclick="downloadQRCode()" disabled>⬇️ تنزيل الباركود</button>
+  </div>
+</div>
+
+<div class="ad-bar">📢 إعلان هنا - مساحة Google AdSense</div>
+
+<script>
+  let currentQRCode = null;
+  let currentLang = 'ar';
+
+  function generateQRCode() {
+    const text = document.getElementById('text').value.trim();
+    const size = parseInt(document.getElementById('size').value);
+    const ecLevel = document.getElementById('errorCorrection').value;
+    const colorDark = document.getElementById('colorDark').value;
+    const colorLight = document.getElementById('colorLight').value;
+    const qrcodeDiv = document.getElementById('qrcode');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    if (!text) {
+      alert(currentLang === 'ar' ? '🚨 يرجى إدخال نص أولاً' : '🚨 Please enter text first');
+      return;
+    }
+
+    qrcodeDiv.innerHTML = '';
+    if (currentQRCode && currentQRCode.clear) currentQRCode.clear();
+
+    currentQRCode = new QRCode(qrcodeDiv, {
+      text: text,
+      width: size,
+      height: size,
+      colorDark: colorDark,
+      colorLight: colorLight,
+      correctLevel: QRCode.CorrectLevel[ecLevel]
+    });
+
+    setTimeout(() => {
+      downloadBtn.disabled = false;
+    }, 500);
+  }
+
+  function downloadQRCode() {
+    if (!currentQRCode) return;
+    const canvas = document.querySelector('#qrcode canvas');
+    const link = document.createElement('a');
+    link.download = 'barcode.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  }
+
+  function toggleLanguage() {
+    const texts = {
+      'text': ['النص أو الرابط', 'Text or URL'],
+      'colorDark': ['🎨 لون الباركود', '🎨 QR Color'],
+      'colorLight': ['🖼️ لون الخلفية', '🖼️ Background Color'],
+      'size': ['الحجم', 'Size'],
+      'error': ['تصحيح الخطأ', 'Error Correction'],
+      'generateBtn': ['🔄 توليد الباركود', '🔄 Generate QR Code'],
+      'downloadBtn': ['⬇️ تنزيل الباركود', '⬇️ Download QR Code'],
+      'preview-title': ['📦 الباركود الناتج', '📦 Generated QR Code'],
+      'settings-title': ['🎯 إعدادات الباركود', '🎯 QR Code Settings']
+    };
+
+    currentLang = currentLang === 'ar' ? 'en' : 'ar';
+
+    document.getElementById('label-text').textContent = texts.text[currentLang === 'ar' ? 0 : 1];
+    document.getElementById('label-colorDark').textContent = texts.colorDark[currentLang === 'ar' ? 0 : 1];
+    document.getElementById('label-colorLight').textContent = texts.colorLight[currentLang === 'ar' ? 0 : 1];
+    document.getElementById('label-size').textContent = texts.size[currentLang === 'ar' ? 0 : 1];
+    document.getElementById('label-error').textContent = texts.error[currentLang === 'ar' ? 0 : 1];
+    document.getElementById('generateBtn').textContent = texts.generateBtn[currentLang === 'ar' ? 0 : 1];
+    document.getElementById('downloadBtn').textContent = texts.downloadBtn[currentLang === 'ar' ? 0 : 1];
+    document.getElementById('preview-title').textContent = texts['preview-title'][currentLang === 'ar' ? 0 : 1];
+    document.getElementById('settings-title').textContent = texts['settings-title'][currentLang === 'ar' ? 0 : 1];
+
+    document.querySelector('.language-toggle').textContent = currentLang === 'ar' ? 'English' : 'العربية';
+  }
+</script>
+
+</body>
+</html>
